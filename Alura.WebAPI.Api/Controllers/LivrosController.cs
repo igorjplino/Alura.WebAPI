@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 
 namespace Alura.ListaLeitura.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class LivrosController : ControllerBase
@@ -55,7 +55,7 @@ namespace Alura.ListaLeitura.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult Incluir([FromBody] LivroUpload model)
+        public IActionResult Incluir([FromForm] LivroUpload model)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace Alura.ListaLeitura.Api.Controllers
         }
 
         [HttpPut]
-        public IActionResult Alterar([FromBody] LivroUpload model)
+        public IActionResult Alterar([FromForm] LivroUpload model)
         {
             if (ModelState.IsValid)
             {
