@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Alura.WebAPI.WebApp.HttpClients
 {
+    public class LoginResult
+    {
+        public bool Succeeded { get; set; }
+        public string Token { get; set; }
+    }
+
     public class AuthApiClient
     {
         private readonly HttpClient _httpClient;
@@ -16,12 +22,15 @@ namespace Alura.WebAPI.WebApp.HttpClients
             _httpClient = httpClient;
         }
 
-        public async Task<string> PostLoginASync(LoginModel model)
+        public async Task<LoginResult> PostLoginASync(LoginModel model)
         {
             var resposta = await _httpClient.PostAsJsonAsync("login", model);
-            resposta.EnsureSuccessStatusCode();
 
-            return await resposta.Content.ReadAsStringAsync();
+            return new LoginResult
+            {
+                Succeeded = resposta.IsSuccessStatusCode,
+                Token = await resposta.Content.ReadAsStringAsync()
+            };
         }
     }
 }
