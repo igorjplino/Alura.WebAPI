@@ -1,13 +1,9 @@
-﻿using Alura.ListaLeitura.Seguranca;
-using Alura.ListaLeitura.Modelos;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Alura.WebAPI.WebApp.Formatters;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using Alura.WebAPI.WebApp.HttpClients;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -25,18 +21,6 @@ namespace Alura.ListaLeitura.WebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AuthDbContext>(options => {
-                options.UseSqlServer(Configuration.GetConnectionString("AuthDB"));
-            });
-
-            //services.AddIdentity<Usuario, IdentityRole>(options =>
-            //{
-            //    options.Password.RequiredLength = 3;
-            //    options.Password.RequireNonAlphanumeric = false;
-            //    options.Password.RequireUppercase = false;
-            //    options.Password.RequireLowercase = false;
-            //}).AddEntityFrameworkStores<AuthDbContext>();
-
             services.AddHttpContextAccessor();
 
             services
@@ -55,10 +39,6 @@ namespace Alura.ListaLeitura.WebApp
             {
                 client.BaseAddress = new Uri("http://localhost:5000/api/");
             });
-
-            //services.ConfigureApplicationCookie(options => {
-            //    options.LoginPath = "/Usuario/Login";
-            //});
 
             services.AddMvc(options => {
                 options.OutputFormatters.Add(new LivroCsvFormatter());
